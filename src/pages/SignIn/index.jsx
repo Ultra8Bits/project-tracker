@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { Form, Input, Row, Col, Button, Alert, Typography } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
+import { Form, Input, Row, Col, Button, Alert, Typography } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 export default function SignIn() {
-  const [form] = Form.useForm();
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const { signin } = useAuth();
+  const [form] = Form.useForm()
+  const [error, setError] = useState()
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const { signin } = useAuth()
 
   const onFinish = async (values) => {
-    setLoading(true);
+    setLoading(true)
     try {
-      setError(null);
-      await signin(values.email, values.password);
-      setLoading(false);
-      navigate('/');
+      setError(null)
+      await signin(values.email, values.password)
+      setLoading(false)
+      navigate('/')
     } catch (error) {
-      setError(error.message);
-      setLoading(false);
+      setError(error.message)
+      setLoading(false)
     }
-  };
+  }
+
+  const singInAsAdmin = async () => {
+    setLoading(true)
+    try {
+      setError(null)
+      await signin('instructor@gmail.com', '123123123')
+      setLoading(false)
+      navigate('/')
+    } catch (error) {
+      setError(error.message)
+      setLoading(false)
+    }
+  }
 
   return (
     <Row justify='center' align='middle' style={{ height: '100vh' }}>
@@ -54,7 +67,6 @@ export default function SignIn() {
           >
             <Input />
           </Form.Item>
-
           <Form.Item
             name='password'
             label='Password'
@@ -68,7 +80,6 @@ export default function SignIn() {
           >
             <Input.Password />
           </Form.Item>
-
           <div className='myFooter'>
             <Link to='/forgot-password'>Forgot password?</Link>
             <div>
@@ -85,8 +96,16 @@ export default function SignIn() {
               Sign In
             </Button>
           </Form.Item>
+          <Button
+            loading={loading}
+            disabled={loading}
+            type='primary'
+            onClick={singInAsAdmin}
+          >
+            Sign In as Instructor
+          </Button>
         </Form>
       </Col>
     </Row>
-  );
+  )
 }
