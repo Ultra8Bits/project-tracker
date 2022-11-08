@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
-import { Form, Input, Row, Col, Button, Alert, Typography } from 'antd'
+import { Form, Input, Row, Col, Button, Alert, Typography, Divider } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 
 const { Title } = Typography
@@ -96,6 +96,12 @@ export default function SignIn() {
               Sign In
             </Button>
           </Form.Item>
+          <Divider />
+          <div className='myFooter'>
+            <div>
+              Or, Click the button bellow and sign in as a default instructor
+            </div>
+          </div>
           <Button
             loading={loading}
             disabled={loading}
